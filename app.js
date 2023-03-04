@@ -72,7 +72,7 @@ const run = async () => {
   await mongoose.connect("mongodb://164.152.48.202/admin-bro", {
     useNewUrlParser: true,
   });
-  await app.listen(8080, () =>
+  await app.listen(3000, () =>
     console.log(`Example app listening on port 8080!`)
   );
 };
