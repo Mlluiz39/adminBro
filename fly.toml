@@ -1,12 +1,9 @@
-# fly.toml file generated for adminrecipes on 2023-03-04T14:23:55-03:00
+# fly.toml file generated for adminbroapi on 2023-03-05T19:21:26-03:00
 
-app = "adminrecipes"
+app = "adminbroapi"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
-
-[build]
-  builder = "heroku/buildpacks:20"
 
 [env]
   PORT = "8080"

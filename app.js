@@ -12,17 +12,24 @@ AdminBro.registerAdapter(require("admin-bro-mongoose"));
 // express server definition
 const app = express();
 app.use(bodyParser.json());
+const port = process.env.PORT || "8080";
 
 // Resources definitions
 const User = mongoose.model("User", {
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ["admin", "restricted"], required: true },
   name: String,
   firstName: String,
-  email: String,
-  password: String,
 });
 var recipesSchema = new mongoose.Schema({
-  title: String,
-  body: String,
+  title: { type: String, required: true },
+  category: { type: String, required: true },
+  yeld: { type: String, required: true },
+  ingredients: [{ name: String, quantity: String }],
+  preparation: { type: String, required: true },
+  preparationTime: { type: String, required: true },
+
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -58,9 +65,9 @@ app.get("/recipes", async (req, res) => {
 const adminBro = new AdminBro({
   resources: [User, Recipes],
   rootPath: "/admin",
-  branding:{
-    companyName: 'Mlluiz devBook',
-  }
+  branding: {
+    companyName: "Mlluiz devBook",
+  },
 });
 
 // Build and use a router which will handle all AdminBro routes
@@ -72,8 +79,8 @@ const run = async () => {
   await mongoose.connect("mongodb://164.152.48.202/admin-bro", {
     useNewUrlParser: true,
   });
-  await app.listen(3000, () =>
-    console.log(`Example app listening on port 8080!`)
+  app.listen(port, () =>
+    console.log(`AdminBro is under http://localhost:${port}/admin`)
   );
 };
 
